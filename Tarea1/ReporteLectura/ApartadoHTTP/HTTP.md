@@ -55,5 +55,6 @@ Explica al menos 5 códigos con ejemplos reales:
 
  
 
- 
+ FUENTE1: https://developer.mozilla.org/es/docs/Web/HTTP
+ FUENTE2: https://developer.mozilla.org/es/docs/Web/HTTP/Reference/Status
 
