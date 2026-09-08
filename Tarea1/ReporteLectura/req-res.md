@@ -14,3 +14,5 @@ req.params: Lo usamos cuando el dato es una parte obligatoria de la ruta de la U
 req.query: Lo usamos para datos extras u opcionales que van al final de la URL lo que va despues del signo de interrogacion. Vi se usa mucho para filtrar, ordenar o hacer busquedas. 
 
 req.body: Lo usamos cuando la información es más grande y no debe ir visible en la URL.
+
+Fuente : https://keepcoding.io/blog/que-significa-el-req-query-en-express-js/

@@ -9,3 +9,6 @@ El principal problema que resuelve esque si nosotros queremos levantar un servid
 ¿Qué es una ruta en Express?
 
 Una ruta es la instrucción que le damos al servidor para decirle qué tiene que hacer cuando alguien entra a una URL específica usando un método HTTP en especifico.
+
+
+fuente : https://developer.mozilla.org/es/docs/Web/HTTP/Reference/Status
