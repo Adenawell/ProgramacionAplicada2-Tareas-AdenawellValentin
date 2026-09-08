@@ -65,7 +65,10 @@ app.delete('/productos/:id', (req, res) => {
 });
 
 app.get('/carrito/total', (req, res) => {
-    const total = productos.reduce((acc, p) => acc + (p.precio * p.cantidad), 0);
+    let total = 0;
+    productos.forEach(p => {
+        total += (p.precio * p.cantidad);
+    });
     res.json({ total });
 });
 
@@ -76,7 +79,11 @@ app.post('/carrito/aplicar-descuento', (req, res) => {
         return res.status(400).json({ error: "El descuento debe ser entre 0 y 50" });
     }
 
-    const totalOriginal = productos.reduce((acc, p) => acc + (p.precio * p.cantidad), 0);
+    let totalOriginal = 0;
+    productos.forEach(p => {
+        totalOriginal += (p.precio * p.cantidad);
+    });
+
     const totalConDescuento = totalOriginal - (totalOriginal * (porcentaje / 100));
 
     res.json({ 
@@ -86,4 +93,4 @@ app.post('/carrito/aplicar-descuento', (req, res) => {
     });
 });
 
-app.listen(3000, () => console.log("Servidor en el puerto 3000"));
+app.listen(3000, () => console.log("Servidor corriendo"));
