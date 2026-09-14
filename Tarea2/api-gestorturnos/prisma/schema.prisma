@@ -1,9 +1,10 @@
 datasource db {
   provider = "postgresql"
+  schemas  = ["turnos"]
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
 }
 
 model Turno {
@@ -11,4 +12,6 @@ model Turno {
   cliente  String
   servicio String
   estado   String @default("esperando")
+
+  @@schema("turnos")
 }

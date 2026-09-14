@@ -1,10 +1,17 @@
 import { Router } from "express";
-import { listarTurnos, verSiguiente, contarEspera, crearTurno, llamarSiguiente, finalizarTurno } from "../controllers/turno.controller.js";
-import { validarTurno } from "../middleware/validation.midleware.js";
+import {
+  listarTurnos,
+  verSiguiente,
+  contarEspera,
+  crearTurno,
+  llamarSiguiente,
+  finalizarTurno
+} from "../controllers/turno.controller.js";
+
+import { validarTurno } from "../middleware/validation.middleware.js";
 
 const router = Router();
 
-// Rutas para turnos
 router.get("/", listarTurnos);
 router.get("/siguiente", verSiguiente);
 router.get("/espera", contarEspera);
