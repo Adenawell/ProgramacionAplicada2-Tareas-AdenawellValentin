@@ -1,15 +1,15 @@
 import {Router} from "express";
-import {getEncuestas, getEncuestaById, createEncuesta, updateEncuesta, deleteEncuesta} from "../controllers/encuestas.controller.js";
-import {validateEncuesta} from "../middlewares/validateEncuesta.js";
+import {obtenerEncuestas , obtenerEncuestaId, crearEncuesta, actualizarEncuesta, eliminarEncuesta} from "../controllers/encuestas.controller.js";
+import {validarEncuesta} from "../validation.middleware.js";
 
 const router = Router();
 
 // Rutas para encuestas
-router.get("/", getEncuestas);
-router.get("/:id", getEncuestaById);
-router.post("/", validateEncuesta, createEncuesta);
-router.put("/:id", validateEncuesta, updateEncuesta);
-router.delete("/:id", deleteEncuesta);
+router.get("/", obtenerEncuestas);
+router.get("/:id", obtenerEncuestaId);
+router.post("/", validarEncuesta, crearEncuesta);
+router.put("/:id", validarEncuesta, actualizarEncuesta);
+router.delete("/:id", eliminarEncuesta);
 
 export default router;
 
