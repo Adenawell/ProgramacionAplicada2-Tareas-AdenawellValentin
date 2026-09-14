@@ -1,9 +1,17 @@
-
-generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
-}
-
 datasource db {
   provider = "postgresql"
+  schemas  = ["inventario", "public"]
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Inventario {
+  id          Int    @id @default(autoincrement())
+  producto    String
+  stock       Int
+  stockMinimo Int    @default(5)
+
+  @@schema("inventario")
 }
