@@ -1,20 +1,17 @@
-generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
-}
-
 datasource db {
   provider = "postgresql"
+  schemas  = ["carrito"]
 }
 
+generator client {
+  provider = "prisma-client-js"
+}
 
 model Producto {
   id       Int    @id @default(autoincrement())
-  nombre   String
+  nombre   String @unique
   precio   Float
   cantidad Int
+
+  @@schema("carrito")
 }
-
-
-
-

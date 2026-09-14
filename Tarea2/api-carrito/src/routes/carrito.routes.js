@@ -7,21 +7,23 @@ import {
   obtenerTotalCarrito,
   aplicarDescuento
 } from "../controllers/carrito.controllers.js";
+
 import { 
   validarProducto, 
-  validarCantidad 
+  validarCantidad,
+  validarDescuento 
 } from "../middleware/validation.middleware.js";
 
 const router = Router();
 
-// Rutas de productos dentro del carrito
+// productos
 router.get("/productos", obtenerProductos);
 router.post("/productos", validarProducto, crearProducto);
 router.put("/productos/:id", validarCantidad, actualizarCantidad);
 router.delete("/productos/:id", eliminarProducto);
 
-// Rutas de totales y descuentos
-router.get("/total", obtenerTotalCarrito);
-router.post("/aplicar-descuento", aplicarDescuento);
+// carrito
+router.get("/carrito/total", obtenerTotalCarrito);
+router.post("/carrito/aplicar-descuento", validarDescuento, aplicarDescuento);
 
 export default router;

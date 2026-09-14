@@ -18,3 +18,15 @@ export const validarCantidad = (req, res, next) => {
     }
     next();
 };
+
+export const validarDescuento = (req, res, next) => {
+    const porcentaje = req.body?.porcentaje;
+
+    if (porcentaje === undefined || porcentaje <= 0) {
+        return res.status(400).json({ error: "El porcentaje debe ser un numero positivo" });
+    }
+    if (porcentaje > 50) {
+        return res.status(400).json({ error: "El descuento maximo permitido es 50%" });
+    }
+    next();
+};

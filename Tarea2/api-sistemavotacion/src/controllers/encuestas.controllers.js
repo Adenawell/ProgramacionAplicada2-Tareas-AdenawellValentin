@@ -39,19 +39,19 @@ export const crearEncuesta = async (req, res) => {
 
     const nuevaEncuesta = await db.encuesta.create({
       data: {
-        pregunta: pregunta,
+        pregunta,
         opciones: {
-          create: opciones 
+          create: opciones.map(op => ({
+            name: (typeof op === "string" ? op : op.name).trim()
+          }))
         }
       },
-      include: { 
-        opciones: true 
-      }
+      include: { opciones: true }
     });
 
     res.status(201).json(nuevaEncuesta);
   } catch (error) {
-    console.log(error); 
+    console.error(error);
     res.status(400).json({ error: "Error al crear la encuesta" });
   }
 };
@@ -91,6 +91,83 @@ export const eliminarEncuesta = async (req, res) => {
 
 };
 
+// Registrar  voto
+export const votarOpcion = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { opcion } = req.body;
+
+    if (!opcion || typeof opcion !== "string" || opcion.trim() === "") {
+      return res.status(400).json({ error: " indica el nombre de la opcion" });
+    }
+
+    const opcionEncontrada = await db.opcion.findFirst({
+      where: {
+        encuestaId: Number(id),
+        name: opcion.trim(),
+      },
+    });
+
+    if (!opcionEncontrada) {
+      return res.status(404).json({ error: "La opcion no existe en la encuesta" });
+    }
+
+    const opcionActualizada = await db.opcion.update({
+      where: { id: opcionEncontrada.id },
+      data: { votos: { increment: 1 } },
+    });
+
+    res.status(200).json({
+      mensaje: "Voto registrado correctamente",
+      opcion: opcionActualizada,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al registrar el voto" });
+  }
+};
+
+// Obtener resultados con porcentajes
+export const obtenerResultados = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const encuesta = await db.encuesta.findUnique({
+      where: { id: Number(id) },
+      include: { opciones: true },
+    });
+
+    if (!encuesta) {
+      return res.status(404).json({ error: "Encuesta no encontrada" });
+    }
+
+    const totalVotos = encuesta.opciones.reduce((acc, op) => acc + op.votos, 0);
+
+    const resultados = encuesta.opciones.map((op) => ({
+      id: op.id,
+      name: op.name,
+      votos: op.votos,
+      porcentaje: totalVotos > 0 ? Number(((op.votos / totalVotos) * 100).toFixed(2)) : 0,
+    }));
+
+    let ganador = "Sin votos ";
+    if (totalVotos > 0) {
+      const maxVotos = Math.max(...resultados.map((r) => r.votos));
+      const ganadores = resultados.filter((r) => r.votos === maxVotos);
+      ganador = ganadores.map((g) => g.name).join(", ");
+    }
+
+    res.status(200).json({
+      encuesta: encuesta.pregunta,
+      totalVotos,
+      ganador,
+      resultados,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al calcular los resultados" });
+  }
+};
 
 
 

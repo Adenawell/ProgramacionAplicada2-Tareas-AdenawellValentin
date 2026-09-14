@@ -4,18 +4,17 @@ generator client {
 
 datasource db {
   provider = "postgresql"
- 
 }
 
 model Encuesta {
-  id        Int      @id @default(autoincrement())
-  pregunta  String
-  opciones  Opcion[]
+  id       Int      @id @default(autoincrement())
+  pregunta String
+  opciones Opcion[]
 }
 
 model Opcion {
   id         Int      @id @default(autoincrement())
-  name      String
+  name       String
   votos      Int      @default(0)
   encuestaId Int
   encuesta   Encuesta @relation(fields: [encuestaId], references: [id], onDelete: Cascade)

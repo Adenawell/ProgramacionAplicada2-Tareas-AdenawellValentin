@@ -9,9 +9,10 @@ export const validarEncuesta = (req, res, next) => {
     return res.status(400).json({ error: "Debe proporcionar un conjunto con al menos dos opciones" });
   }
 
-  const tieneOpcionesInvalidas = opciones.some(
-    (opcion) => !opcion.name || typeof opcion.name !== 'string' || opcion.name.trim() === ""
-  );
+  const tieneOpcionesInvalidas = opciones.some((opcion) => {
+    const texto = typeof opcion === 'string' ? opcion : opcion?.name;
+    return !texto || typeof texto !== 'string' || texto.trim() === "";
+  });
 
   if (tieneOpcionesInvalidas) {
     return res.status(400).json({ error: "Cada opcion debe contener un texto valido y no vacio" });
