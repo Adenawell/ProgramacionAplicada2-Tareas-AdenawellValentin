@@ -19,7 +19,6 @@ app.post('/habitos', (req, res) => {
         return res.status(400).json({ error: "Faltan datos" });
     }
 
-    // Guardar fecha de creacion para calcular el porcentaje luego
     const fechaDeHoy = new Date().toISOString().split('T')[0];
 
     const nuevo = {
