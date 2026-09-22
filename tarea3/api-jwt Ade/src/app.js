@@ -15,7 +15,7 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' })
 })
 
-// al final de src/app.js, antes de export default app
+
 app.use((err, req, res, next) => {
   console.error("ERROR INTERNO:", err)
   res.status(500).json({ error: err.message })
