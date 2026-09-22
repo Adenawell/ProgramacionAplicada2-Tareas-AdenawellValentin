@@ -4,5 +4,6 @@ export const apikeyMiddleware = (req, res, next) => {
     if (!apiKey || apiKey !== process.env.API_KEY) {
         return res.status(401).json({ error: 'API key inválida' });
     }
+    next();
 
 }
