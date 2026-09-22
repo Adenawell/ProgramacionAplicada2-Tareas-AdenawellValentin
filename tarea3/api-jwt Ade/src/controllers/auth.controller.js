@@ -25,7 +25,7 @@ export const registro = async (req, res, next) => {
         nombre,
         email,
         password: passwordHash,
-        rol: rol || "CLIENT"
+        rol: rol || "usuario"
       }
     });
 
