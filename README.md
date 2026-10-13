@@ -14,3 +14,13 @@ Matricula : 2023-0647
 - npx prisma migrate dev --name init
 - npx prisma generate
 - npx create-expo-app@latest mi-proyecto
+
+## Tema 2 - Comands for Expo
+- npm install -g expo-cli
+- npx create-expo-app@latest mi-app --template tabs
+- cd mi-app
+- npm install
+- npx expo start
+- npx expo start --clear
+- npm install -D @expo/ngrok
+- npx expo start --tunnel
