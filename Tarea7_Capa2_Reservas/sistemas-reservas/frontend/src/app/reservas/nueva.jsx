@@ -2,14 +2,22 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, ActivityIndicator, Alert, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Constants from 'expo-constants';
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
 export default function NuevaReservaScreen() {
   const { servicioId, nombreServicio } = useLocalSearchParams();
-  const [fecha, setFecha] = useState('');
-  const [hora, setHora] = useState('');
+  
+
+  const hoy = new Date().toISOString().split('T')[0];
+  
+
+  const ahora = new Date();
+  ahora.setHours(ahora.getHours() + 1);
+  const horaFutura = ahora.toTimeString().slice(0, 5);
+
+  const [fecha, setFecha] = useState(hoy);
+  const [hora, setHora] = useState(horaFutura);
   const [loading, setLoading] = useState(false);
 
   const handleReservar = async () => {
@@ -25,7 +33,7 @@ export default function NuevaReservaScreen() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
       
-      Alert.alert('Exito', 'Reserva creada correctamente');
+      Alert.alert('Éxito', 'Reserva creada correctamente');
       router.replace('/reservas');
     } catch (error) {
       Alert.alert('Error', error.message);
@@ -40,14 +48,28 @@ export default function NuevaReservaScreen() {
         <Text style={styles.subtitle}>Reservar:</Text>
         <Text style={styles.title}>{nombreServicio}</Text>
 
-        <TextInput style={styles.input} placeholder="Fecha (YYYY-MM-DD)" placeholderTextColor="#94a3b8" value={fecha} onChangeText={setFecha} />
-        <TextInput style={styles.input} placeholder="Hora (HH:MM)" placeholderTextColor="#94a3b8" value={hora} onChangeText={setHora} />
+        <TextInput 
+          style={styles.input} 
+          placeholder="Fecha (YYYY-MM-DD)" 
+          placeholderTextColor="#94a3b8" 
+          value={fecha} 
+          onChangeText={setFecha} 
+        />
+        <TextInput 
+          style={styles.input} 
+          placeholder="Hora (HH:MM)" 
+          placeholderTextColor="#94a3b8" 
+          value={hora} 
+          onChangeText={setHora} 
+        />
         
-        {loading ? <ActivityIndicator size="large" color="#3b82f6" style={{ marginTop: 20 }} /> : 
+        {loading ? (
+          <ActivityIndicator size="large" color="#3b82f6" style={{ marginTop: 20 }} />
+        ) : (
           <TouchableOpacity style={styles.button} onPress={handleReservar}>
             <Text style={styles.buttonText}>Confirmar Reserva</Text>
           </TouchableOpacity>
-        }
+        )}
       </View>
     </TouchableWithoutFeedback>
   );
