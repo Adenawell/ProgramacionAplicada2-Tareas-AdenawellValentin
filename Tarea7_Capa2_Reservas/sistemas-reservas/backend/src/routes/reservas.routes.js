@@ -1,18 +1,18 @@
-const express = require('express');
-const router = express.Router();
-const auth = require('../middlewares/auth');
-const esAdmin = require('../middlewares/esAdmin');
-const { 
+import express from 'express';
+import { validarToken, soloAdmin } from '../middlewares/auth.middleware.js'; 
+import { 
   crearReserva, obtenerMisReservas, obtenerTodas, cambiarEstado, cancelarReserva 
-} = require('../controllers/reservasController');
+} from '../controllers/reservas.controller.js';
 
-// Clientes
-router.post('/', auth, crearReserva);
-router.get('/mis-reservas', auth, obtenerMisReservas);
-router.delete('/:id', auth, cancelarReserva);
+const router = express.Router();
 
-// Admin
-router.get('/', auth, esAdmin, obtenerTodas);
-router.put('/:id/estado', auth, esAdmin, cambiarEstado);
+// Clientes 
+router.post('/', validarToken, crearReserva);
+router.get('/mis-reservas', validarToken, obtenerMisReservas);
+router.delete('/:id', validarToken, cancelarReserva);
 
-module.exports = router;
+// Admin 
+router.get('/', validarToken, soloAdmin, obtenerTodas);
+router.put('/:id/estado', validarToken, soloAdmin, cambiarEstado);
+
+export default router;

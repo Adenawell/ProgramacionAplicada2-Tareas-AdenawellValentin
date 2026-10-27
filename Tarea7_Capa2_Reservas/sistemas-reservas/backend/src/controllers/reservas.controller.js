@@ -1,14 +1,12 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+import { prisma } from '../db.js';
 
-exports.crearReserva = async (req, res) => {
+export const crearReserva = async (req, res) => {
   try {
     const { servicioId, fecha, hora } = req.body;
     
-    // No se puede reservar una fecha pasada
     const fechaReserva = new Date(`${fecha}T${hora}:00`);
     if (fechaReserva < new Date()) {
-      return res.status(400).json({ error: 'No puedes reservar en una fecha u hora pasada' });
+      return res.status(400).json({ error: 'No puedes reservar en una fecha o hora pasada' });
     }
 
     const reserva = await prisma.reserva.create({
@@ -25,9 +23,8 @@ exports.crearReserva = async (req, res) => {
   }
 };
 
-exports.obtenerMisReservas = async (req, res) => {
+export const obtenerMisReservas = async (req, res) => {
   try {
-   
     const reservas = await prisma.reserva.findMany({
       where: { usuarioId: req.usuario.id },
       include: { servicio: true },
@@ -39,7 +36,7 @@ exports.obtenerMisReservas = async (req, res) => {
   }
 };
 
-exports.obtenerTodas = async (req, res) => {
+export const obtenerTodas = async (req, res) => {
   try {
     const reservas = await prisma.reserva.findMany({
       include: { servicio: true, usuario: { select: { nombre: true, email: true } } },
@@ -51,7 +48,7 @@ exports.obtenerTodas = async (req, res) => {
   }
 };
 
-exports.cambiarEstado = async (req, res) => {
+export const cambiarEstado = async (req, res) => {
   try {
     const { id } = req.params;
     const { estado } = req.body; 
@@ -66,13 +63,12 @@ exports.cambiarEstado = async (req, res) => {
   }
 };
 
-exports.cancelarReserva = async (req, res) => {
+export const cancelarReserva = async (req, res) => {
   try {
     const { id } = req.params;
     
     const reservaExistente = await prisma.reserva.findUnique({ where: { id: Number(id) } });
     
-
     if (!reservaExistente || reservaExistente.usuarioId !== req.usuario.id) {
       return res.status(403).json({ error: 'No puedes cancelar esta reserva' });
     }
