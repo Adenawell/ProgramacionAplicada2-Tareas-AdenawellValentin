@@ -55,12 +55,12 @@ export default function ServiciosScreen() {
       </View>
       
       {rol === 'admin' && (
-        <TouchableOpacity style={styles.adminButton} onPress={() => router.push('/crear-servicio')}>
+        <TouchableOpacity style={styles.adminButton} onPress={() => router.push('/servicios/crear-servicio')}>
           <Text style={styles.adminButtonText}>+ Crear Nuevo Servicio</Text>
         </TouchableOpacity>
       )}
 
-      {/* NUEVO BOTÓN: Ver Mis Reservas */}
+      
       <TouchableOpacity style={[styles.adminButton, { borderColor: '#3b82f6', marginBottom: 20 }]} onPress={() => router.push('/reservas')}>
         <Text style={[styles.adminButtonText, { color: '#f8fafc' }]}>📅 Ver Mis Reservas</Text>
       </TouchableOpacity>
