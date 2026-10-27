@@ -4,7 +4,10 @@ import { validarRegistro, validarLogin } from '../middlewares/validaciones.middl
 
 const router = Router();
 
+
 router.post('/registro', validarRegistro, register);
+
+
 router.post('/login', validarLogin, login);
 
 export default router;
