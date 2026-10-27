@@ -8,16 +8,13 @@ const API_URL = process.env.EXPO_PUBLIC_API_URL;
 export default function NuevaReservaScreen() {
   const { servicioId, nombreServicio } = useLocalSearchParams();
   
-
-  const hoy = new Date().toISOString().split('T')[0];
-  
-
+  // Obtener la fecha y hora exacta actual del dispositivo
   const ahora = new Date();
-  ahora.setHours(ahora.getHours() + 1);
-  const horaFutura = ahora.toTimeString().slice(0, 5);
+  const hoy = ahora.toISOString().split('T')[0];
+  const horaActual = ahora.toTimeString().slice(0, 5);
 
   const [fecha, setFecha] = useState(hoy);
-  const [hora, setHora] = useState(horaFutura);
+  const [hora, setHora] = useState(horaActual);
   const [loading, setLoading] = useState(false);
 
   const handleReservar = async () => {
@@ -48,28 +45,14 @@ export default function NuevaReservaScreen() {
         <Text style={styles.subtitle}>Reservar:</Text>
         <Text style={styles.title}>{nombreServicio}</Text>
 
-        <TextInput 
-          style={styles.input} 
-          placeholder="Fecha (YYYY-MM-DD)" 
-          placeholderTextColor="#94a3b8" 
-          value={fecha} 
-          onChangeText={setFecha} 
-        />
-        <TextInput 
-          style={styles.input} 
-          placeholder="Hora (HH:MM)" 
-          placeholderTextColor="#94a3b8" 
-          value={hora} 
-          onChangeText={setHora} 
-        />
+        <TextInput style={styles.input} placeholder="Fecha (YYYY-MM-DD)" placeholderTextColor="#94a3b8" value={fecha} onChangeText={setFecha} />
+        <TextInput style={styles.input} placeholder="Hora (HH:MM)" placeholderTextColor="#94a3b8" value={hora} onChangeText={setHora} />
         
-        {loading ? (
-          <ActivityIndicator size="large" color="#3b82f6" style={{ marginTop: 20 }} />
-        ) : (
+        {loading ? <ActivityIndicator size="large" color="#3b82f6" style={{ marginTop: 20 }} /> : 
           <TouchableOpacity style={styles.button} onPress={handleReservar}>
             <Text style={styles.buttonText}>Confirmar Reserva</Text>
           </TouchableOpacity>
-        )}
+        }
       </View>
     </TouchableWithoutFeedback>
   );
