@@ -2,7 +2,7 @@ import { prisma } from '../db.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-export const registro = async (req, res, next) => {
+export const register = async (req, res, next) => {
     try {
         const { nombre, email, password, rol } = req.body;
 
@@ -13,7 +13,6 @@ export const registro = async (req, res, next) => {
         if (usuarioExistente) {
             return res.status(400).json({ error: "El email ya esta en uso" });
         }
-
 
         const passwordHasheada = await bcrypt.hash(password, 10);
 

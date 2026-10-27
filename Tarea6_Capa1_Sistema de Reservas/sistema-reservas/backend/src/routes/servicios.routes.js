@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { obtenerServicios, crearServicio, editarServicio, eliminarServicio } from './servicios.controller.js';
-import { validarToken, soloAdmin } from './auth.middleware.js';
-import { validarCreacionYEdicionServicio, validarId } from './validaciones.middleware.js'; 
+import { obtenerServicios, crearServicio, editarServicio, eliminarServicio } from '../controllers/services.controller.js';
+import { validarToken, soloAdmin } from '../middlewares/auth.middleware.js';
+import { validarCreacionYEdicionServicio, validarId } from '../middlewares/validaciones.middleware.js'; 
 
 const router = Router();
 
