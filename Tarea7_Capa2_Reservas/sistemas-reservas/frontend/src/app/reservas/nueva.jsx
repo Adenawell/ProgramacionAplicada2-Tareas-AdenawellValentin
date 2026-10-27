@@ -4,7 +4,7 @@ import { useLocalSearchParams, router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 
-const API_URL = Constants.expoConfig?.extra?.apiUrl;
+const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
 export default function NuevaReservaScreen() {
   const { servicioId, nombreServicio } = useLocalSearchParams();
@@ -25,7 +25,7 @@ export default function NuevaReservaScreen() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
       
-      Alert.alert('Éxito', 'Reserva creada correctamente');
+      Alert.alert('Exito', 'Reserva creada correctamente');
       router.replace('/reservas');
     } catch (error) {
       Alert.alert('Error', error.message);
