@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { registro, login } from './auth.controller.js';
-import { validarRegistro, validarLogin } from './validaciones.middleware.js'; // Ajusta la ruta a tu archivo
+import { login, register } from '../controllers/auth.controller.js';
+import { validarRegistro, validarLogin } from './validaciones.middleware.js'; 
 
 const router = Router();
 
-router.post('/registro', validarRegistro, registro);
+router.post('/registro', validarRegistro, register);
 router.post('/login', validarLogin, login);
 
 export default router;
