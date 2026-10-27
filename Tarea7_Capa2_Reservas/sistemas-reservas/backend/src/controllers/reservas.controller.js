@@ -4,8 +4,11 @@ export const crearReserva = async (req, res) => {
   try {
     const { servicioId, fecha, hora } = req.body;
     
+
     const fechaReserva = new Date(`${fecha}T${hora}:00`);
-    if (fechaReserva < new Date()) {
+    const ahoraConTolerancia = new Date(Date.now() - 2 * 60 * 1000); 
+
+    if (fechaReserva < ahoraConTolerancia) {
       return res.status(400).json({ error: 'No puedes reservar en una fecha o hora pasada' });
     }
 
