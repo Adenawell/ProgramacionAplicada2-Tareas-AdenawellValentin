@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use("/auth", authRoutes);
 app.use("/servicios", validarToken, servicesRoutes);
-app.use('/reservas', reservasRoutes);
+app.use("/reservas", validarToken, reservasRoutes);
 
 app.use((error, req, res, next)=>{
     console.error("Error en el Servidor", error.message);

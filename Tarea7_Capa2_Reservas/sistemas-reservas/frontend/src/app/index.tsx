@@ -26,7 +26,7 @@ export default function LoginScreen() {
       await AsyncStorage.setItem('token', data.token);
       await AsyncStorage.setItem('rol', data.rol); 
       
-      router.replace('/servicios');
+      router.replace('/servicios/servicios');
     } catch (error: any) {
       Alert.alert('Error', error.message || 'Error al iniciar sesión');
     } finally {
