@@ -1,7 +1,7 @@
 import express from 'express'
 import { loggerMiddleware } from './middlewares/logger.middleware.js';
 import authRoutes from './routes/auth.routes.js'
-import servicesRoutes from './routes/services.routes.js'
+import servicesRoutes from './routes/servicios.routes.js'
 import { validarToken } from './middlewares/auth.middleware.js';
 const app = express();
 app.use(express.json());
