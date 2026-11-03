@@ -25,6 +25,8 @@ export default function LoginScreen() {
       
       await AsyncStorage.setItem('token', data.token);
       await AsyncStorage.setItem('rol', data.rol); 
+      if (data.nombre) await AsyncStorage.setItem('nombre', data.nombre);
+      if (data.email) await AsyncStorage.setItem('email', data.email);
       
       router.replace('/servicios/servicios');
     } catch (error: any) {
@@ -41,7 +43,7 @@ export default function LoginScreen() {
       <TextInput 
         style={styles.input} 
         placeholder="Email" 
-        placeholderTextColor="#94a3b8" 
+        placeholderTextColor="#A9A596" 
         value={email} 
         onChangeText={setEmail} 
         autoCapitalize="none" 
@@ -50,14 +52,14 @@ export default function LoginScreen() {
       <TextInput 
         style={styles.input} 
         placeholder="Password" 
-        placeholderTextColor="#94a3b8" 
+        placeholderTextColor="#A9A596" 
         value={password} 
         onChangeText={setPassword} 
         secureTextEntry 
       />
       
       {loading ? (
-        <ActivityIndicator size="large" color="#3b82f6" />
+        <ActivityIndicator size="large" color="#81B29A" style={{ marginTop: 20 }} />
       ) : (
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Entrar</Text>
@@ -72,11 +74,11 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 25, justifyContent: 'center', backgroundColor: '#0f172a' },
-  title: { fontSize: 28, fontWeight: 'bold', color: '#f8fafc', marginBottom: 30, textAlign: 'center' },
-  input: { backgroundColor: '#1e293b', color: '#f8fafc', padding: 15, marginBottom: 15, borderRadius: 10, fontSize: 16 },
-  button: { backgroundColor: '#2563eb', padding: 16, borderRadius: 10, alignItems: 'center', marginTop: 10 },
-  buttonText: { color: '#ffffff', fontSize: 16, fontWeight: 'bold' },
-  secondaryButton: { backgroundColor: '#334155', padding: 16, borderRadius: 10, alignItems: 'center', marginTop: 15 },
-  secondaryButtonText: { color: '#e2e8f0', fontSize: 16, fontWeight: 'bold' }
+  container: { flex: 1, padding: 25, justifyContent: 'center', backgroundColor: '#141412' }, // Fondo carbón cálido
+  title: { fontSize: 26, fontWeight: '700', color: '#F4F1DE', marginBottom: 35, textAlign: 'center' }, // Marfil suave
+  input: { backgroundColor: '#1E1F1C', color: '#F4F1DE', padding: 16, marginBottom: 16, borderRadius: 12, fontSize: 16, borderWidth: 1, borderColor: '#2C2E29' }, // Superficie y bordes sutiles
+  button: { backgroundColor: '#81B29A', padding: 16, borderRadius: 12, alignItems: 'center', marginTop: 10 }, // Verde salvia elegante
+  buttonText: { color: '#141412', fontSize: 16, fontWeight: '700' },
+  secondaryButton: { backgroundColor: 'transparent', borderWidth: 1, borderColor: '#81B29A', padding: 16, borderRadius: 12, alignItems: 'center', marginTop: 15 },
+  secondaryButtonText: { color: '#81B29A', fontSize: 16, fontWeight: '700' }
 });
