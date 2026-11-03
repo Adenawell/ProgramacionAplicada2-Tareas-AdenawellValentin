@@ -48,7 +48,6 @@ export default function MisReservasScreen() {
               await Notifications.cancelScheduledNotificationAsync(item.notificationId);
             }
 
-
             Alert.alert('Éxito', 'Reserva cancelada');
             cargarReservas();
           } catch (error) {
@@ -60,46 +59,40 @@ export default function MisReservasScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Mis Reservas</Text>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Text style={styles.volverText}>Volver</Text>
-        </TouchableOpacity>
-      </View>
-
-      {loading ? <ActivityIndicator size="large" color="#81B29A" style={{ marginTop: 50 }} /> : 
-        reservas.length === 0 ? <Text style={styles.emptyText}>No tienes reservas aún.</Text> : (
-          <FlatList
-            data={reservas}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <View style={styles.card}>
-                <View style={styles.cardHeader}>
-                  <Text style={styles.cardTitle}>{item.servicio?.nombre}</Text>
-                  <Text style={[styles.badge, { backgroundColor: item.estado === 'pendiente' ? '#F4A261' : item.estado === 'completada' ? '#81B29A' : '#E07A5F' }]}>
-                    {item.estado.toUpperCase()}
-                  </Text>
-                </View>
-                <Text style={styles.dateText}>📅 {item.fecha} a las ⏰ {item.hora}</Text>
-                
-                {item.estado === 'pendiente' && (
-                  <TouchableOpacity style={styles.cancelButton} onPress={() => handleCancelar(item)}>
-                    <Text style={styles.cancelButtonText}>Cancelar Reserva</Text>
-                  </TouchableOpacity>
-                )}
+      {loading ? (
+        <ActivityIndicator size="large" color="#81B29A" style={{ marginTop: 50 }} />
+      ) : reservas.length === 0 ? (
+        <Text style={styles.emptyText}>No tienes reservas aún.</Text>
+      ) : (
+        <FlatList
+          data={reservas}
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={{ paddingTop: 15, paddingBottom: 20 }}
+          renderItem={({ item }) => (
+            <View style={styles.card}>
+              <View style={styles.cardHeader}>
+                <Text style={styles.cardTitle}>{item.servicio?.nombre}</Text>
+                <Text style={[styles.badge, { backgroundColor: item.estado === 'pendiente' ? '#F4A261' : item.estado === 'completada' ? '#81B29A' : '#E07A5F' }]}>
+                  {item.estado.toUpperCase()}
+                </Text>
               </View>
-            )}
-          />
-        )}
+              <Text style={styles.dateText}>📅 {item.fecha} a las ⏰ {item.hora}</Text>
+              
+              {item.estado === 'pendiente' && (
+                <TouchableOpacity style={styles.cancelButton} onPress={() => handleCancelar(item)}>
+                  <Text style={styles.cancelButtonText}>Cancelar Reserva</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          )}
+        />
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, paddingHorizontal: 20, backgroundColor: '#141412' }, 
-  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20, marginTop: 60 },
-  title: { fontSize: 26, fontWeight: '700', color: '#F4F1DE' }, 
-  volverText: { color: '#81B29A', fontSize: 16, fontWeight: '700' },
   emptyText: { color: '#A9A596', fontSize: 16, textAlign: 'center', marginTop: 40 }, 
   card: { padding: 18, backgroundColor: '#1E1F1C', marginBottom: 15, borderRadius: 16, borderWidth: 1, borderColor: '#2C2E29' }, 
   cardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 },

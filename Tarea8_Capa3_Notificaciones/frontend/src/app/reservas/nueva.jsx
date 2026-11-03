@@ -9,7 +9,6 @@ const API_URL = process.env.EXPO_PUBLIC_API_URL;
 export default function NuevaReservaScreen() {
   const { servicioId, nombreServicio } = useLocalSearchParams();
   
-  // Obtener la fecha y hora exacta actual del dispositivo
   const ahora = new Date();
   const hoy = ahora.toISOString().split('T')[0];
   const horaActual = ahora.toTimeString().slice(0, 5);
@@ -30,25 +29,20 @@ export default function NuevaReservaScreen() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
       
+  
+      const notificationId = await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "📅 Recordatorio de Reserva (Evidencia)",
+          body: `Tienes una reserva para el servicio "${nombreServicio || 'Servicio'}" registrado con éxito.`,
+          sound: true,
+        },
+        trigger: { seconds: 5 }, 
+      });
 
-      const fechaReserva = new Date(`${fecha}T${hora}:00`);
-      const diferenciaHoras = (fechaReserva - ahora) / (1000 * 60 * 60);
+      console.log("Notificación programada con ID:", notificationId);
 
-      if (diferenciaHoras > 24) {
-        const fechaNotificacion = new Date(fechaReserva.getTime() - (24 * 60 * 60 * 1000));
-        
-        await Notifications.scheduleNotificationAsync({
-          content: {
-            title: "📅 Recordatorio de Reserva",
-            body: `Tienes una reserva para el servicio "${nombreServicio || 'Servicio'}" mañana a las ${hora}.`,
-          },
-          trigger: { date: fechaNotificacion },
-        });
-      }
-
-
-      Alert.alert('Éxito', 'Reserva creada correctamente');
-      router.replace('/reservas/index');
+      Alert.alert('Éxito', 'Reserva creada correctamente. La notificación de prueba llegará en 5 segundos.');
+      router.replace('/reservas');
     } catch (error) {
       Alert.alert('Error', error.message);
     } finally {
@@ -86,11 +80,11 @@ export default function NuevaReservaScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 25, justifyContent: 'center', backgroundColor: '#141412' }, // Fondo carbón cálido
-  subtitle: { fontSize: 16, color: '#A9A596', textAlign: 'center', fontWeight: '600' }, // Texto secundario natural
-  title: { fontSize: 26, fontWeight: 'bold', color: '#F4F1DE', marginBottom: 35, textAlign: 'center' }, // Marfil suave
-  input: { backgroundColor: '#1E1F1C', color: '#F4F1DE', padding: 18, marginBottom: 20, borderRadius: 12, fontSize: 16, borderWidth: 1, borderColor: '#2C2E29' }, // Superficie elegante y bordes sutiles
+  container: { flex: 1, padding: 25, justifyContent: 'center', backgroundColor: '#141412' }, 
+  subtitle: { fontSize: 16, color: '#A9A596', textAlign: 'center', fontWeight: '600' }, 
+  title: { fontSize: 26, fontWeight: 'bold', color: '#F4F1DE', marginBottom: 35, textAlign: 'center' }, 
+  input: { backgroundColor: '#1E1F1C', color: '#F4F1DE', padding: 18, marginBottom: 20, borderRadius: 12, fontSize: 16, borderWidth: 1, borderColor: '#2C2E29' }, 
   disabledInput: { opacity: 0.6 }, 
-  button: { backgroundColor: '#81B29A', padding: 18, borderRadius: 12, alignItems: 'center', marginTop: 10 }, // Verde salvia elegante
-  buttonText: { color: '#141412', fontSize: 18, fontWeight: '700' } // Contraste óptimo sobre el verde salvia
+  button: { backgroundColor: '#81B29A', padding: 18, borderRadius: 12, alignItems: 'center', marginTop: 10 }, 
+  buttonText: { color: '#141412', fontSize: 18, fontWeight: '700' }
 });
