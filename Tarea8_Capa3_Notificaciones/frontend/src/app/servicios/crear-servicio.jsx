@@ -50,13 +50,40 @@ export default function CrearServicioScreen() {
       <View style={styles.container}>
         <Text style={styles.title}>Nuevo Servicio</Text>
 
-        <TextInput style={styles.input} placeholder="Nombre del servicio" placeholderTextColor="#94a3b8" value={nombre} onChangeText={setNombre} />
-        <TextInput style={styles.input} placeholder="Descripción" placeholderTextColor="#94a3b8" value={descripcion} onChangeText={setDescripcion} multiline />
-        <TextInput style={styles.input} placeholder="Duración (minutos)" placeholderTextColor="#94a3b8" value={duracion} onChangeText={setDuracion} keyboardType="numeric" />
-        <TextInput style={styles.input} placeholder="Precio" placeholderTextColor="#94a3b8" value={precio} onChangeText={setPrecio} keyboardType="numeric" />
+        <TextInput 
+          style={styles.input} 
+          placeholder="Nombre del servicio" 
+          placeholderTextColor="#A9A596" 
+          value={nombre} 
+          onChangeText={setNombre} 
+        />
+        <TextInput 
+          style={[styles.input, styles.textArea]} 
+          placeholder="Descripción" 
+          placeholderTextColor="#A9A596" 
+          value={descripcion} 
+          onChangeText={setDescripcion} 
+          multiline 
+        />
+        <TextInput 
+          style={styles.input} 
+          placeholder="Duración (minutos)" 
+          placeholderTextColor="#A9A596" 
+          value={duracion} 
+          onChangeText={setDuracion} 
+          keyboardType="numeric" 
+        />
+        <TextInput 
+          style={styles.input} 
+          placeholder="Precio" 
+          placeholderTextColor="#A9A596" 
+          value={precio} 
+          onChangeText={setPrecio} 
+          keyboardType="numeric" 
+        />
         
         {loading ? (
-          <ActivityIndicator size="large" color="#3b82f6" />
+          <ActivityIndicator size="large" color="#81B29A" style={{ marginTop: 20 }} />
         ) : (
           <TouchableOpacity style={styles.button} onPress={handleCrear}>
             <Text style={styles.buttonText}>Guardar Servicio</Text>
@@ -68,9 +95,9 @@ export default function CrearServicioScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 25, justifyContent: 'center', backgroundColor: '#0f172a' },
-  title: { fontSize: 28, fontWeight: 'bold', color: '#f8fafc', marginBottom: 30, textAlign: 'center' },
-  input: { backgroundColor: '#1e293b', color: '#f8fafc', padding: 15, marginBottom: 15, borderRadius: 10, fontSize: 16 },
-  button: { backgroundColor: '#2563eb', padding: 16, borderRadius: 10, alignItems: 'center', marginTop: 10 },
-  buttonText: { color: '#ffffff', fontSize: 16, fontWeight: 'bold' }
+  container: { flex: 1, padding: 25, justifyContent: 'center', backgroundColor: '#141412' }, 
+  title: { fontSize: 26, fontWeight: '700', color: '#F4F1DE', marginBottom: 35, textAlign: 'center' }, 
+  input: { backgroundColor: '#1E1F1C', color: '#F4F1DE', padding: 16, marginBottom: 16, borderRadius: 12, fontSize: 16, borderWidth: 1, borderColor: '#2C2E29' },
+  button: { backgroundColor: '#81B29A', padding: 16, borderRadius: 12, alignItems: 'center', marginTop: 10 }, 
+  buttonText: { color: '#141412', fontSize: 16, fontWeight: '700' }
 });
