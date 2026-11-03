@@ -65,8 +65,10 @@ export default function ServiciosScreen() {
         </TouchableOpacity>
       )}
 
-
-      <TouchableOpacity style={[styles.adminButton, { borderColor: '#81B29A', marginBottom: 20 }]} onPress={() => router.push('/reservas/index')}>
+      <TouchableOpacity 
+        style={[styles.adminButton, { borderColor: '#81B29A', marginBottom: 20 }]} 
+        onPress={() => router.push('/reservas')}
+      >
         <Text style={[styles.adminButtonText, { color: '#81B29A' }]}>📅 Ver Mis Reservas</Text>
       </TouchableOpacity>
 
@@ -106,6 +108,7 @@ const styles = StyleSheet.create({
   profileText: { color: '#81B29A', fontSize: 16, fontWeight: '700' }, 
   logoutText: { color: '#E07A5F', fontSize: 16, fontWeight: '700' },
   adminButton: { backgroundColor: '#1E1F1C', padding: 15, borderRadius: 12, alignItems: 'center', marginBottom: 15, borderWidth: 1, borderColor: '#2C2E29' }, 
+  adminButtonText: { color: '#81B29A', fontSize: 16, fontWeight: '700' },
   card: { padding: 18, backgroundColor: '#1E1F1C', marginBottom: 15, borderRadius: 16, borderWidth: 1, borderColor: '#2C2E29' },
   cardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 },
   cardTitle: { fontSize: 18, fontWeight: '700', color: '#F4F1DE', flex: 1 },
