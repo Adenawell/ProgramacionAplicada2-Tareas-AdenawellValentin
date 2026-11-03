@@ -29,19 +29,22 @@ export default function NuevaReservaScreen() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
       
-  
       const notificationId = await Notifications.scheduleNotificationAsync({
         content: {
           title: "📅 Recordatorio de Reserva (Evidencia)",
           body: `Tienes una reserva para el servicio "${nombreServicio || 'Servicio'}" registrado con éxito.`,
           sound: true,
         },
-        trigger: { seconds: 5 }, 
+        trigger: {
+          type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+          seconds: 5,
+          repeats: false,
+        },
       });
 
       console.log("Notificación programada con ID:", notificationId);
 
-      Alert.alert('Éxito', 'Reserva creada correctamente. La notificación de prueba llegará en 5 segundos.');
+      Alert.alert('Éxito', 'Reserva creada correctamente.');
       router.replace('/reservas');
     } catch (error) {
       Alert.alert('Error', error.message);
