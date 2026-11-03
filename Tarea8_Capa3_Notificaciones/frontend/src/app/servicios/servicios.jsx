@@ -49,9 +49,14 @@ export default function ServiciosScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Servicios</Text>
-        <TouchableOpacity onPress={async () => { await AsyncStorage.clear(); router.replace('/'); }}>
-          <Text style={styles.logoutText}>Salir</Text>
-        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 15 }}>
+          <TouchableOpacity onPress={() => router.push('/perfil/perfil')}>
+            <Text style={styles.profileText}>Perfil</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={async () => { await AsyncStorage.clear(); router.replace('/'); }}>
+            <Text style={styles.logoutText}>Salir</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       
       {rol === 'admin' && (
@@ -60,13 +65,13 @@ export default function ServiciosScreen() {
         </TouchableOpacity>
       )}
 
-      
-      <TouchableOpacity style={[styles.adminButton, { borderColor: '#3b82f6', marginBottom: 20 }]} onPress={() => router.push('/reservas')}>
-        <Text style={[styles.adminButtonText, { color: '#f8fafc' }]}>📅 Ver Mis Reservas</Text>
+
+      <TouchableOpacity style={[styles.adminButton, { borderColor: '#81B29A', marginBottom: 20 }]} onPress={() => router.push('/reservas/index')}>
+        <Text style={[styles.adminButtonText, { color: '#81B29A' }]}>📅 Ver Mis Reservas</Text>
       </TouchableOpacity>
 
       {loading ? (
-        <ActivityIndicator size="large" color="#3b82f6" style={{ marginTop: 50 }} />
+        <ActivityIndicator size="large" color="#81B29A" style={{ marginTop: 50 }} />
       ) : (
         <FlatList
           data={servicios}
@@ -95,16 +100,16 @@ export default function ServiciosScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingHorizontal: 20, backgroundColor: '#0f172a' },
+  container: { flex: 1, paddingHorizontal: 20, backgroundColor: '#141412' },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20, marginTop: 60 },
-  title: { fontSize: 28, fontWeight: 'bold', color: '#f8fafc' },
-  logoutText: { color: '#ef4444', fontSize: 16, fontWeight: 'bold' },
-  adminButton: { backgroundColor: '#1e293b', padding: 15, borderRadius: 10, alignItems: 'center', marginBottom: 20, borderWidth: 1, borderColor: '#334155' },
-  adminButtonText: { color: '#60a5fa', fontSize: 16, fontWeight: 'bold' },
-  card: { padding: 18, backgroundColor: '#1e293b', marginBottom: 15, borderRadius: 12, elevation: 3 },
+  title: { fontSize: 26, fontWeight: '700', color: '#F4F1DE' }, 
+  profileText: { color: '#81B29A', fontSize: 16, fontWeight: '700' }, 
+  logoutText: { color: '#E07A5F', fontSize: 16, fontWeight: '700' },
+  adminButton: { backgroundColor: '#1E1F1C', padding: 15, borderRadius: 12, alignItems: 'center', marginBottom: 15, borderWidth: 1, borderColor: '#2C2E29' }, 
+  card: { padding: 18, backgroundColor: '#1E1F1C', marginBottom: 15, borderRadius: 16, borderWidth: 1, borderColor: '#2C2E29' },
   cardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 },
-  cardTitle: { fontSize: 18, fontWeight: 'bold', color: '#f8fafc', flex: 1 },
-  price: { fontSize: 18, color: '#60a5fa', fontWeight: 'bold', marginLeft: 10 },
-  cardDesc: { color: '#94a3b8', marginBottom: 10, lineHeight: 20 },
-  cardDuration: { color: '#cbd5e1', fontSize: 14, fontWeight: '500' }
+  cardTitle: { fontSize: 18, fontWeight: '700', color: '#F4F1DE', flex: 1 },
+  price: { fontSize: 18, color: '#81B29A', fontWeight: '700', marginLeft: 10 },
+  cardDesc: { color: '#A9A596', marginBottom: 10, lineHeight: 20 }, 
+  cardDuration: { color: '#F4F1DE', fontSize: 14, fontWeight: '500' }
 });
